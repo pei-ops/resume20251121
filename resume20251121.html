@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>陳姓學生 — 個人履歷表</title>
+  <!-- html2pdf CDN (uses html2canvas + jsPDF internally) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    /* Reset & base */
+    :root{ --accent:#0b6cf6; --muted:#6b7280; --bg:#f7f9fc; --card:#ffffff; }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; margin:0; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Arial"; background:var(--bg); color:#111827; }
+    .container{ max-width:900px; margin:28px auto; padding:20px; }
+    .resume{ display:grid; grid-template-columns: 1fr 2fr; gap:20px; background:var(--card); border-radius:14px; padding:22px; box-shadow:0 6px 20px rgba(2,6,23,0.06); }
+    /* Left column */
+    .left{ padding:18px; background:linear-gradient(180deg,#ffffff,#fbfdff); border-radius:12px; }
+    .photo{ width:110px; height:110px; border-radius:12px; background:linear-gradient(135deg,var(--accent),#6bd3ff); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:28px; }
+    h1{ margin:0; font-size:22px; }
+    .muted{ color:var(--muted); font-size:13px; }
+    .section{ margin-top:18px; }
+    .section h3{ margin:0 0 8px 0; font-size:14px; }
+    ul{ padding-left:18px; margin:6px 0; }
+    .skill{ display:inline-block; padding:6px 10px; border-radius:999px; background:#f1f5f9; font-size:13px; margin:6px 6px 0 0; }
+    /* Right column */
+    .right{ padding:18px; }
+    .summary{ font-size:14px; line-height:1.5; }
+    .job, .edu{ margin-bottom:12px; }
+    .job h4{ margin:0; font-size:15px; }
+    .job .meta{ font-size:13px; color:var(--muted); }
+    .tools{ display:flex; gap:8px; flex-wrap:wrap; }
+    /* Header actions */
+    .actions{ display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-bottom:10px; }
+    button{ background:var(--accent); color:white; border:0; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:600; }
+    button.secondary{ background:#eef2ff; color:#0b3ba8; }
+    /* Print-friendly */
+    @media print{
+      body{ background:white; }
+      .container{ box-shadow:none; margin:0; }
+      .actions{ display:none; }
+      .resume{ box-shadow:none; border-radius:0; }
+    }
+    /* Page-break support for html2pdf */
+    .page-break { display:block; page-break-after:always; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="actions">
+      <button id="downloadPdf">匯出 PDF</button>
+      <button id="downloadPdfA4" class="secondary">匯出（A4 高解析）</button>
+    </div>
+
+    <div id="resumeRoot" class="resume" role="document" aria-label="個人履歷表">
+      <aside class="left">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="photo">陳</div>
+          <div>
+            <h1>陳禹伂</h1>
+            <div class="muted">亞洲大學 — 經營管理系 學生</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>聯絡資訊</h3>
+          <div class="muted">Email</div>
+          <div>chenyupi@example.com</div>
+          <div class="muted" style="margin-top:8px">電話</div>
+          <div>+886-912-345-678</div>
+          <div class="muted" style="margin-top:8px">LinkedIn / GitHub</div>
+          <div>linkedin.com/in/chenyupi · github.com/chenyupi</div>
+        </div>
+
+        <div class="section">
+          <h3>技能</h3>
+          <div class="tools">
+            <span class="skill">Excel / 財務建模</span>
+            <span class="skill">PowerPoint</span>
+            <span class="skill">市場分析</span>
+            <span class="skill">溝通協調</span>
+            <span class="skill">基本 HTML/CSS/JS</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>語言</h3>
+          <ul>
+            <li>中文（母語）</li>
+            <li>英文（TOEIC / B2）</li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="right">
+        <section class="summary section">
+          <h3>個人簡介</h3>
+          <p>積極主動、具團隊精神的經營管理系學生。對市場分析、營運流程與專案協調有興趣，具實習經驗與學術專題成果，能快速學習並在實務中貢獻價值。</p>
+        </section>
+
+        <section class="section">
+          <h3>經歷</h3>
+          <article class="job">
+            <h4>行銷實習生 — 某科技公司</h4>
+            <div class="meta">2024/06 — 2024/08 · 台中</div>
+            <div>協助市場調查、整理競品分析報告，支援活動企劃與社群貼文文案撰寫，提升活動報名數 18%。</div>
+          </article>
+
+          <article class="job">
+            <h4>專題助理 — 亞洲大學</h4>
+            <div class="meta">2023/09 — 2024/05</div>
+            <div>參與系上專題「中小企業財務韌性研究」，負責資料整理與初步統計分析。</div>
+          </article>
+        </section>
+
+        <section class="section">
+          <h3>教育背景</h3>
+          <div class="edu">
+            <strong>亞洲大學 — 經營管理系</strong>
+            <div class="meta">在學中 · 2022 — 現在</div>
+            <div>主修：企業管理、行銷學、財務管理。GPA: 3.5/4.0（示範填寫）</div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h3>專案與成果</h3>
+          <ul>
+            <li>校內市場分析競賽 — 團隊前 3 名，負責資料收集與簡報。</li>
+            <li>個人部落格：分析消費者行為、月閱覽人次成長 200%。</li>
+          </ul>
+        </section>
+
+      </main>
+    </div>
+
+    <div style="margin-top:12px; font-size:13px; color:var(--muted)">提示：可直接編輯 HTML 內容來修改資料。若要更換照片，請替換 .photo 區塊內的內容或改為 &lt;img&gt; 標籤。</div>
+  </div>
+
+  <script>
+    // 一般用途的 PDF 匯出配置（快速）
+    function exportPdf(options = {}){
+      const element = document.getElementById('resumeRoot');
+      const opt = Object.assign({
+        margin:       10,
+        filename:     'Resume_陳禹伂.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }, options);
+      // html2pdf returns a promise
+      html2pdf().set(opt).from(element).save();
+    }
+
+    document.getElementById('downloadPdf').addEventListener('click', ()=>{
+      // quick export (smaller file)
+      exportPdf({ filename: 'Resume_陳禹伂_quick.pdf', html2canvas:{ scale:1.6 } });
+    });
+
+    document.getElementById('downloadPdfA4').addEventListener('click', ()=>{
+      // high quality A4 export
+      exportPdf({ filename: 'Resume_陳禹伂_A4_highres.pdf', html2canvas:{ scale:3 }, jsPDF:{ unit:'mm', format:'a4', orientation:'portrait' } });
+    });
+
+    // Fallback if html2pdf library not loaded
+    if(typeof html2pdf === 'undefined'){
+      document.getElementById('downloadPdf').addEventListener('click', ()=>{
+        alert('PDF 匯出庫未載入，無法匯出。請檢查網路或使用支援外部資源的瀏覽器。');
+      });
+      document.getElementById('downloadPdfA4').addEventListener('click', ()=>{ alert('PDF 匯出庫未載入。'); });
+    }
+  </script>
+</body>
+</html>
