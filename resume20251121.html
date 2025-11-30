@@ -136,37 +136,3 @@
   </div>
 
   <script>
-    // 一般用途的 PDF 匯出配置（快速）
-    function exportPdf(options = {}){
-      const element = document.getElementById('resumeRoot');
-      const opt = Object.assign({
-        margin:       10,
-        filename:     'Resume_陳禹伂.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      }, options);
-      // html2pdf returns a promise
-      html2pdf().set(opt).from(element).save();
-    }
-
-    document.getElementById('downloadPdf').addEventListener('click', ()=>{
-      // quick export (smaller file)
-      exportPdf({ filename: 'Resume_陳禹伂_quick.pdf', html2canvas:{ scale:1.6 } });
-    });
-
-    document.getElementById('downloadPdfA4').addEventListener('click', ()=>{
-      // high quality A4 export
-      exportPdf({ filename: 'Resume_陳禹伂_A4_highres.pdf', html2canvas:{ scale:3 }, jsPDF:{ unit:'mm', format:'a4', orientation:'portrait' } });
-    });
-
-    // Fallback if html2pdf library not loaded
-    if(typeof html2pdf === 'undefined'){
-      document.getElementById('downloadPdf').addEventListener('click', ()=>{
-        alert('PDF 匯出庫未載入，無法匯出。請檢查網路或使用支援外部資源的瀏覽器。');
-      });
-      document.getElementById('downloadPdfA4').addEventListener('click', ()=>{ alert('PDF 匯出庫未載入。'); });
-    }
-  </script>
-</body>
-</html>
