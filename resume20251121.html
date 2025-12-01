@@ -277,11 +277,9 @@
         <div class="profile-header">
           <div class="photo">
             <!-- 
-              更新：根據您的截圖，路徑已設定為 img/照片.jpg
-              如果下載後仍無法顯示，且您的電腦有開啟「隱藏副檔名」功能，
-              請嘗試將下方 src 改為 "img/照片.jpg.jpg" 
+              已將路徑改為 profile.jpg，請使用者將照片檔重新命名
             -->
-            <img src="img/照片.jpg" alt="陳禹伂照片" id="profileImg" onerror="this.src='https://ui-avatars.com/api/?name=陳+禹伂&background=0b6cf6&color=fff&size=256&font-size=0.4'">
+            <img src="img/profile.jpg" alt="陳禹伂照片" id="profileImg" onerror="this.src='https://ui-avatars.com/api/?name=陳+禹伂&background=0b6cf6&color=fff&size=256&font-size=0.4'" title="請確認 img/profile.jpg 檔案是否存在">
           </div>
           <div class="name-title">
             <h1>陳禹伂</h1>
@@ -384,8 +382,8 @@
     </div>
     
     <div class="tip-footer" style="text-align:center; margin-top:20px; color:#9ca3af; font-size:12px;">
-      <b>提示：</b>此版本已根據您的截圖設定路徑為 <code>img/照片.jpg</code>。<br>
-      請下載檔案後，確認此 HTML 檔案旁邊有一個 <code>img</code> 資料夾，裡面有 <code>照片.jpg</code>。
+      <b>提示：</b>已將圖片路徑改為 <code>img/profile.jpg</code>。<br>
+      請下載檔案後，<b>將您的照片檔重新命名為 <code>profile.jpg</code></b>，並確保它位於 <code>img</code> 資料夾內。
     </div>
   </div>
 
@@ -412,7 +410,8 @@
         button.disabled = false;
       }).catch(err => {
         console.error(err);
-        alert("匯出失敗，請檢查圖片是否跨域限制");
+        // 將 alert 替換為 console.error 供診斷
+        console.error("匯出失敗，可能原因：圖片跨域限制或路徑錯誤。");
         button.innerText = originalText;
         button.disabled = false;
       });
