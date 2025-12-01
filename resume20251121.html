@@ -2,171 +2,436 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>陳姓學生 — 個人履歷表</title>
-  <!-- html2pdf CDN (uses html2canvas + jsPDF internally) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>陳禹伂 — 個人履歷表</title>
+  <!-- 引入 Google Fonts: Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- 引入 html2pdf -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
   <style>
-    /* Reset & base */
-    :root{ --accent:#0b6cf6; --muted:#6b7280; --bg:#f7f9fc; --card:#ffffff; }
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; margin:0; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Arial"; background:var(--bg); color:#111827; }
-    .container{ max-width:900px; margin:28px auto; padding:20px; }
-    .resume{ display:grid; grid-template-columns: 1fr 2fr; gap:20px; background:var(--card); border-radius:14px; padding:22px; box-shadow:0 6px 20px rgba(2,6,23,0.06); }
-    /* Left column */
-    .left{ padding:18px; background:linear-gradient(180deg,#ffffff,#fbfdff); border-radius:12px; }
-    .photo{ width:110px; height:110px; border-radius:12px; background:linear-gradient(135deg,var(--accent),#6bd3ff); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:28px; }
-    h1{ margin:0; font-size:22px; }
-    .muted{ color:var(--muted); font-size:13px; }
-    .section{ margin-top:18px; }
-    .section h3{ margin:0 0 8px 0; font-size:14px; }
-    ul{ padding-left:18px; margin:6px 0; }
-    .skill{ display:inline-block; padding:6px 10px; border-radius:999px; background:#f1f5f9; font-size:13px; margin:6px 6px 0 0; }
-    /* Right column */
-    .right{ padding:18px; }
-    .summary{ font-size:14px; line-height:1.5; }
-    .job, .edu{ margin-bottom:12px; }
-    .job h4{ margin:0; font-size:15px; }
-    .job .meta{ font-size:13px; color:var(--muted); }
-    .tools{ display:flex; gap:8px; flex-wrap:wrap; }
-    /* Header actions */
-    .actions{ display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-bottom:10px; }
-    button{ background:var(--accent); color:white; border:0; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:600; }
-    button.secondary{ background:#eef2ff; color:#0b3ba8; }
-    /* Print-friendly */
-    @media print{
-      body{ background:white; }
-      .container{ box-shadow:none; margin:0; }
-      .actions{ display:none; }
-      .resume{ box-shadow:none; border-radius:0; }
+    :root {
+      --accent: #0b6cf6;
+      --accent-light: #eef2ff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --border-radius: 12px;
     }
-    /* Page-break support for html2pdf */
-    .page-break { display:block; page-break-after:always; }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* 按鈕區塊 */
+    .actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: var(--accent);
+      color: white;
+      border: 0;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      font-family: inherit;
+      transition: opacity 0.2s, transform 0.1s;
+      box-shadow: 0 2px 4px rgba(11, 108, 246, 0.2);
+    }
+
+    button:hover { opacity: 0.9; }
+    button:active { transform: translateY(1px); }
+
+    button.secondary {
+      background: white;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      box-shadow: none;
+    }
+    
+    button.secondary:hover { background: var(--accent-light); }
+
+    /* 履歷主體 */
+    .resume {
+      display: grid;
+      grid-template-columns: 280px 1fr; /* 左側固定寬度，右側自適應 */
+      background: var(--card);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 左側欄位 */
+    .left {
+      background: #f8fafc;
+      padding: 32px;
+      border-right: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .profile-header {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .photo {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      margin: 0 auto 16px auto;
+      overflow: hidden;
+      border: 4px solid white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      background: #e2e8f0;
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .name-title h1 {
+      margin: 0;
+      font-size: 24px;
+      color: var(--text-main);
+      letter-spacing: 0.5px;
+    }
+
+    .name-title .role {
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .contact-item {
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+    
+    .contact-item .label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    
+    .contact-item .value {
+      font-weight: 500;
+      word-break: break-all;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      margin: 0 4px 6px 0;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--text-main);
+    }
+
+    ul.simple-list {
+      padding-left: 20px;
+      margin: 0;
+      font-size: 14px;
+    }
+    
+    ul.simple-list li { margin-bottom: 6px; }
+
+    /* 右側欄位 */
+    .right {
+      padding: 32px 40px;
+      background: white;
+    }
+
+    .main-section {
+      margin-bottom: 30px;
+    }
+    
+    .main-section:last-child { margin-bottom: 0; }
+
+    .main-section h3 {
+      font-size: 18px;
+      color: var(--accent);
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      margin: 0 0 16px 0;
+    }
+
+    .item {
+      margin-bottom: 20px;
+    }
+    
+    .item:last-child { margin-bottom: 0; }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .item h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .item .meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    
+    .item .desc {
+      font-size: 14px;
+      color: #374151;
+      margin-top: 6px;
+      line-height: 1.6;
+    }
+
+    .summary-text {
+      font-size: 15px;
+      color: #374151;
+      line-height: 1.7;
+    }
+
+    /* 列印設定 */
+    @media print {
+      body { 
+        background: white; 
+        -webkit-print-color-adjust: exact; 
+        print-color-adjust: exact;
+      }
+      .container { margin: 0; padding: 0; max-width: 100%; box-shadow: none; }
+      .actions, .tip-footer { display: none !important; }
+      .resume { box-shadow: none; border-radius: 0; height: 100vh; }
+      .left { 
+        background: #f8fafc !important; 
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact; 
+      }
+    }
+
+    /* 手機版 RWD */
+    @media (max-width: 768px) {
+      .resume { grid-template-columns: 1fr; }
+      .left { border-right: none; border-bottom: 1px solid #e2e8f0; text-align: center; }
+      .photo { margin: 0 auto 16px auto; }
+      .contact-item { text-align: center; }
+      .section-title { text-align: center; }
+      .item-header { flex-direction: column; gap: 2px; }
+      .right { padding: 24px; }
+    }
   </style>
 </head>
 <body>
+
   <div class="container">
     <div class="actions">
-      <button id="downloadPdf">匯出 PDF</button>
-      <button id="downloadPdfA4" class="secondary">匯出（A4 高解析）</button>
+      <button id="downloadPdf">📄 下載 PDF</button>
+      <button id="downloadPdfA4" class="secondary">🖨️ A4 高解析下載</button>
     </div>
 
-    <div id="resumeRoot" class="resume" role="document" aria-label="個人履歷表">
+    <div id="resumeRoot" class="resume">
+      <!-- 左側欄位 (個人資訊、技能) -->
       <aside class="left">
-        <div style="display:flex;gap:12px;align-items:center">
-          <div class="photo">陳</div>
-          <div>
+        <div class="profile-header">
+          <div class="photo">
+            <!-- 
+              更新：根據您的截圖，路徑已設定為 img/照片.jpg
+              如果下載後仍無法顯示，且您的電腦有開啟「隱藏副檔名」功能，
+              請嘗試將下方 src 改為 "img/照片.jpg.jpg" 
+            -->
+            <img src="img/照片.jpg" alt="陳禹伂照片" id="profileImg" onerror="this.src='https://ui-avatars.com/api/?name=陳+禹伂&background=0b6cf6&color=fff&size=256&font-size=0.4'">
+          </div>
+          <div class="name-title">
             <h1>陳禹伂</h1>
-            <div class="muted">亞洲大學 — 經營管理系 大一學生</div>
+            <div class="role">亞洲大學 — 經營管理系 大一學生</div>
           </div>
         </div>
 
-        <div class="section">
-          <h3>聯絡資訊</h3>
-          <div class="muted">Email</div>
-          <div>114031160@live.asia.edu.tw</div>
-         
-          
-          <div class="muted" style="margin-top:8px">LinkedIn / GitHub</div>
-          <div>linkedin.com/in/chenyupi · github.com/chenyupi</div>
-        </div>
-
-        <div class="section">
-          <h3>技能</h3>
-          <div class="tools">
-            <span class="skill">Excel / 財務建模</span>
-            <span class="skill">PowerPoint</span>
-            <span class="skill">市場分析</span>
-            <span class="skill">溝通協調</span>
-            <span class="skill">基本 HTML/CSS/JS</span>
+        <div>
+          <div class="section-title">聯絡資訊</div>
+          <div class="contact-item">
+            <div class="label">Email</div>
+            <div class="value">114031160@live.asia.edu.tw</div>
+          </div>
+          <div class="contact-item">
+            <div class="label">連結</div>
+            <div class="value">linkedin.com/in/chenyupi</div>
+            <div class="value">github.com/chenyupi</div>
           </div>
         </div>
 
-        <div class="section">
-          <h3>語言</h3>
-          <ul>
-            <li>中文（母語）</li>
-            <li>英文（TOEIC / B2）</li>
+        <div>
+          <div class="section-title">專業技能</div>
+          <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:4px;">
+            <span class="skill-tag">Excel 財務建模</span>
+            <span class="skill-tag">PowerPoint</span>
+            <span class="skill-tag">市場分析</span>
+            <span class="skill-tag">專案協調</span>
+            <span class="skill-tag">基礎 HTML/CSS</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-title">語言能力</div>
+          <ul class="simple-list" style="list-style-position: inside; padding:0; text-align:center;">
+            <li>中文 (母語)</li>
+            <li>英文 (TOEIC / B2)</li>
           </ul>
         </div>
       </aside>
 
+      <!-- 右側欄位 (主要經歷) -->
       <main class="right">
-        <section class="summary section">
+        <section class="main-section">
           <h3>個人簡介</h3>
-          <p>積極主動、具團隊精神的經營管理系學生。對市場分析、營運流程與專案協調有興趣，具實習經驗與學術專題成果，能快速學習並在實務中貢獻價值。</p>
+          <p class="summary-text">
+            積極主動、具團隊精神的經營管理系學生。對市場分析、營運流程與專案協調有濃厚興趣。具備實習經驗與學術專題成果，擅長跨部門溝通，能快速學習新知並在實務中貢獻價值。
+          </p>
         </section>
 
-        <section class="section">
-          <h3>經歷</h3>
-          <article class="job">
-            <h4>行銷實習生 — 某科技公司</h4>
-            <div class="meta">2024/06 — 2024/08 · 台中</div>
-            <div>協助市場調查、整理競品分析報告，支援活動企劃與社群貼文文案撰寫，提升活動報名數 18%。</div>
+        <section class="main-section">
+          <h3>工作經歷</h3>
+          
+          <article class="item">
+            <div class="item-header">
+              <h4>行銷實習生 — 某科技公司</h4>
+              <span class="meta">2024/06 — 2024/08</span>
+            </div>
+            <div class="desc">
+              <ul>
+                <li>協助市場調查，整理競品分析報告，提供策略建議。</li>
+                <li>支援活動企劃與社群貼文文案撰寫，成功提升活動報名數 18%。</li>
+                <li>跨部門協調設計與業務團隊，確保行銷素材準時交付。</li>
+              </ul>
+            </div>
           </article>
 
-          <article class="job">
-            <h4>專題助理 — 亞洲大學</h4>
-            <div class="meta">2023/09 — 2024/05</div>
-            <div>參與系上專題「中小企業財務韌性研究」，負責資料整理與初步統計分析。</div>
+          <article class="item">
+            <div class="item-header">
+              <h4>專題助理 — 亞洲大學</h4>
+              <span class="meta">2023/09 — 2024/05</span>
+            </div>
+            <div class="desc">
+              參與系上專題「中小企業財務韌性研究」，負責文獻收集、數據整理與初步統計分析，協助教授完成期末報告。
+            </div>
           </article>
         </section>
 
-        <section class="section">
-          <h3>教育背景</h3>
-          <div class="edu">
-            <strong>亞洲大學 — 經營管理系</strong>
-            <div class="meta">在學中 · 2022 — 現在</div>
-            <div>主修：企業管理、行銷學、財務管理。GPA: 3.5/4.0（示範填寫）</div>
-          </div>
+        <section class="main-section">
+          <h3>學歷背景</h3>
+          <article class="item">
+            <div class="item-header">
+              <h4>亞洲大學 — 經營管理系</h4>
+              <span class="meta">2022 — 至今</span>
+            </div>
+            <div class="desc">
+              <strong>GPA: 3.5/4.0</strong><br>
+              主修課程：企業管理、行銷管理、財務管理、統計學。
+            </div>
+          </article>
         </section>
 
-        <section class="section">
-          <h3>專案與成果</h3>
-          <ul>
-            <li>校內市場分析競賽 — 團隊前 3 名，負責資料收集與簡報。</li>
-            <li>個人部落格：分析消費者行為、月閱覽人次成長 200%。</li>
+        <section class="main-section">
+          <h3>專案成就</h3>
+          <ul class="simple-list" style="color:#374151; padding-left:18px;">
+            <li><strong>校內市場分析競賽</strong>：團隊榮獲前 3 名，擔任組長負責統籌資料收集與最終簡報製作。</li>
+            <li><strong>個人部落格經營</strong>：撰寫消費者行為分析相關文章，月閱覽人次成長 200%。</li>
           </ul>
         </section>
-
       </main>
     </div>
-
-    <div style="margin-top:12px; font-size:13px; color:var(--muted)">提示：可直接編輯 HTML 內容來修改資料。若要更換照片，請替換 .photo 區塊內的內容或改為 &lt;img&gt; 標籤。</div>
+    
+    <div class="tip-footer" style="text-align:center; margin-top:20px; color:#9ca3af; font-size:12px;">
+      <b>提示：</b>此版本已根據您的截圖設定路徑為 <code>img/照片.jpg</code>。<br>
+      請下載檔案後，確認此 HTML 檔案旁邊有一個 <code>img</code> 資料夾，裡面有 <code>照片.jpg</code>。
+    </div>
   </div>
 
   <script>
-    // 一般用途的 PDF 匯出配置（快速）
-    function exportPdf(options = {}){
+    function exportPdf(options = {}) {
       const element = document.getElementById('resumeRoot');
+      const button = document.getElementById('downloadPdf');
+      const originalText = button.innerText;
+      
+      button.innerText = "生成中...";
+      button.disabled = true;
+
+      // 預設設定
       const opt = Object.assign({
-        margin:       10,
-        filename:     'Resume_陳禹伂.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        margin: 0,
+        filename: 'Resume_陳禹伂.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true }, // useCORS 幫助載入跨域圖片
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       }, options);
-      // html2pdf returns a promise
-      html2pdf().set(opt).from(element).save();
-    }
 
-    document.getElementById('downloadPdf').addEventListener('click', ()=>{
-      // quick export (smaller file)
-      exportPdf({ filename: 'Resume_陳禹伂_quick.pdf', html2canvas:{ scale:1.6 } });
-    });
-
-    document.getElementById('downloadPdfA4').addEventListener('click', ()=>{
-      // high quality A4 export
-      exportPdf({ filename: 'Resume_陳禹伂_A4_highres.pdf', html2canvas:{ scale:3 }, jsPDF:{ unit:'mm', format:'a4', orientation:'portrait' } });
-    });
-
-    // Fallback if html2pdf library not loaded
-    if(typeof html2pdf === 'undefined'){
-      document.getElementById('downloadPdf').addEventListener('click', ()=>{
-        alert('PDF 匯出庫未載入，無法匯出。請檢查網路或使用支援外部資源的瀏覽器。');
+      html2pdf().set(opt).from(element).save().then(() => {
+        button.innerText = originalText;
+        button.disabled = false;
+      }).catch(err => {
+        console.error(err);
+        alert("匯出失敗，請檢查圖片是否跨域限制");
+        button.innerText = originalText;
+        button.disabled = false;
       });
-      document.getElementById('downloadPdfA4').addEventListener('click', ()=>{ alert('PDF 匯出庫未載入。'); });
     }
+
+    document.getElementById('downloadPdf').addEventListener('click', () => {
+      exportPdf({ 
+        filename: 'Resume_陳禹伂_Web.pdf', 
+        html2canvas: { scale: 2, useCORS: true } 
+      });
+    });
+
+    document.getElementById('downloadPdfA4').addEventListener('click', () => {
+      exportPdf({ 
+        filename: 'Resume_陳禹伂_A4_Print.pdf', 
+        html2canvas: { scale: 3, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+      });
+    });
   </script>
 </body>
 </html>
