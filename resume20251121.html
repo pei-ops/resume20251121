@@ -277,10 +277,16 @@
         <div class="profile-header">
           <div class="photo">
             <!-- 
-              已移除 onerror 備用程式碼，現在將只嘗試載入 img/profile.jpg。
-              如果載入失敗，將顯示瀏覽器的預設破圖圖示。
+              已設定圖片路徑為 img/profile.jpg。
+              如果載入失敗，將退回使用藍色名稱首字母頭像，並在 title 中顯示錯誤提示。
             -->
-            <img src="img/profile.jpg" alt="陳禹伂照片" id="profileImg">
+            <img 
+              src="img/profile.jpg" 
+              alt="陳禹伂照片" 
+              id="profileImg"
+              onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=陳+禹伂&background=0b6cf6&color=fff&size=256&font-size=0.4'; this.title='⚠️ 找不到 img/profile.jpg 檔案，改用備用頭像';"
+              title="請確認 img/profile.jpg 檔案是否存在"
+            >
           </div>
           <div class="name-title">
             <h1>陳禹伂</h1>
@@ -383,7 +389,7 @@
     </div>
     
     <div class="tip-footer" style="text-align:center; margin-top:20px; color:#9ca3af; font-size:12px;">
-      <!-- 提示：圖片路徑已設定為 img/profile.jpg。如果仍顯示破圖或空白，請確認您已上傳該檔案。 -->
+      <b>提示：</b>如果看到藍色頭像，表示找不到 <code>img/profile.jpg</code> 檔案。請確認檔案已上傳且路徑正確。
     </div>
   </div>
 
