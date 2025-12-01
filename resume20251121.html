@@ -3,64 +3,111 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>個人履歷表</title>
+  <title>個人履歷表 — 專業版</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      padding: 20px;
-      line-height: 1.6;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #e9edf5;
+      padding: 40px 0;
+      line-height: 1.7;
+      color: #333;
     }
     .resume-container {
-      width: 800px;
+      width: 860px;
       margin: auto;
       background: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 40px 50px;
+      border-radius: 18px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+      border: 1px solid #d6d9e0;
     }
+
+    /* Header */
     .header {
-      display: flex;
-      gap: 20px;
+      display: grid;
+      grid-template-columns: 180px auto;
+      gap: 30px;
       align-items: center;
+      border-bottom: 3px solid #4f7bd9;
+      padding-bottom: 30px;
     }
-    .header .photo {
-      width: 160px;
-      height: 200px;
-      border-radius: 12px;
+    .photo {
+      width: 180px;
+      height: 230px;
+      border-radius: 14px;
       overflow: hidden;
-      background: #ddd;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    .header .photo img {
+    .photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
     h1 {
       margin: 0;
-      font-size: 32px;
+      font-size: 36px;
+      letter-spacing: 1px;
+      color: #2a3d66;
     }
+    .sub-info p {
+      margin: 4px 0;
+      font-size: 16px;
+      color: #4b5878;
+    }
+
+    /* Section Title */
     h2 {
-      margin-top: 30px;
-      border-left: 5px solid #4f7bd9;
-      padding-left: 10px;
-      font-size: 22px;
+      margin-top: 40px;
+      margin-bottom: 15px;
+      font-size: 24px;
+      color: #2a3d66;
+      font-weight: 600;
+      border-left: 6px solid #4f7bd9;
+      padding-left: 12px;
     }
+
+    /* Lists */
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    /* Button */
     .btn-area {
       text-align: right;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      position: sticky;
+      top: 10px;
     }
     button {
-      padding: 10px 18px;
+      padding: 10px 20px;
       font-size: 16px;
-      border: none;
       background: #4f7bd9;
       color: white;
-      border-radius: 8px;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
     }
     button:hover {
       background: #3c63b0;
+    }
+
+    /* Experience Styling */
+    .item-block {
+      margin-bottom: 20px;
+      padding: 15px 20px;
+      border-radius: 12px;
+      border: 1px solid #d9dce3;
+      background: #f8f9fc;
+    }
+    .item-block p {
+      margin: 6px 0;
     }
   </style>
 </head>
@@ -69,33 +116,124 @@
     <button onclick="window.print()">下載 PDF</button>
   </div>
 
+  <style>
+    /* Two-column layout */
+    .layout {
+      display: grid;
+      grid-template-columns: 280px auto;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .left-col {
+      background: #f4f6fb;
+      padding: 25px;
+      border-radius: 16px;
+      border: 1px solid #d8dce6;
+    }
+
+    .right-col {
+      padding: 10px;
+    }
+
+    .left-title {
+      font-size: 18px;
+      margin: 20px 0 10px;
+      font-weight: 600;
+      color: #2a3d66;
+      border-left: 5px solid #4f7bd9;
+      padding-left: 10px;
+    }
+
+    .left-col ul li {
+      margin-bottom: 8px;
+    }
+
+    /* Experience items */
+    .exp-item {
+      margin-bottom: 22px;
+      padding: 18px 20px;
+      background: #f8f9fc;
+      border: 1px solid #d9dce3;
+      border-radius: 12px;
+    }
+    .exp-item .title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2a3d66;
+      margin-bottom: 6px;
+    }
+    .exp-item .subtitle {
+      font-size: 15px;
+      color: #6a748d;
+      margin-bottom: 8px;
+    }
+  </style>
+
   <div class="resume-container" id="resume">
+
     <div class="header">
       <div class="photo">
         <img src="img/me.jpg" alt="個人照片">
       </div>
       <div>
         <h1>陳禹伂</h1>
-        <p>亞洲大學｜經營管理學系</p>
-        <p>Email：114031160@live.asia.edu.tw</p>
+        <div class="sub-info">
+          <p>亞洲大學｜經營管理學系</p>
+          <p>Email：yourmail@example.com</p>
+          <p>電話：09xx-xxx-xxx</p>
+        </div>
       </div>
     </div>
 
-    <h2>學歷</h2>
-    <p>亞洲大學 經營管理系（在學）</p>
+    <div class="layout">
+      <!-- Left Column -->
+      <div class="left-col">
+        <div class="left-title">技能 SKILLS</div>
+        <ul>
+          <li>資料分析（Excel / Google Sheets）</li>
+          <li>行銷企劃撰寫與專案管理</li>
+          <li>簡報設計（PowerPoint / Keynote）</li>
+          <li>社群內容編輯</li>
+          <li>HTML / CSS / JavaScript</li>
+        </ul>
 
-    <h2>技能</h2>
-    <ul>
-      <li>資料分析</li>
-      <li>行銷企劃</li>
-      <li>商業簡報製作</li>
-      <li>HTML / CSS / JavaScript</li>
-    </ul>
+        <div class="left-title">聯絡資訊 CONTACT</div>
+        <ul>
+          <li>Email：yourmail@example.com</li>
+          <li>電話：09xx-xxx-xxx</li>
+          <li>居住地：台灣</li>
+        </ul>
 
-    <h2>作品 / 經歷</h2>
-    <p>● 曾參與多項行銷專案與簡報製作</p>
-    <p>● 社團及課堂專案實作經驗</p>
+        <div class="left-title">教育 EDUCATION</div>
+        <ul>
+          <li>亞洲大學｜經營管理學系（在學）</li>
+        </ul>
+      </div>
+
+      <!-- Right Column -->
+      <div class="right-col">
+        <h2>專案與經歷 EXPERIENCE</h2>
+
+        <div class="exp-item">
+          <div class="title">行銷企劃專案 — 團隊組長</div>
+          <div class="subtitle">2023 — 2024</div>
+          <p>負責統整資料、規劃簡報方向、協調組員分工與企劃內容呈現，使專案在課堂評比中獲得優秀表現。</p>
+        </div>
+
+        <div class="exp-item">
+          <div class="title">社群媒體內容編輯</div>
+          <div class="subtitle">2023</div>
+          <p>協助撰寫貼文文案、排程發佈、製作配套視覺圖像，提升頁面整體一致性與曝光度。</p>
+        </div>
+
+        <div class="exp-item">
+          <div class="title">商業簡報製作參與</div>
+          <div class="subtitle">多次課堂專案</div>
+          <p>擅長將資料視覺化、撰寫簡報架構、建立風格一致的頁面排版，使團隊報告更具專業度。</p>
+        </div>
+      </div>
+    </div>
   </div>
-
 </body>
 </html>
